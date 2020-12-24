@@ -8,36 +8,37 @@
 
 由于github的markdown解析器不支持latex，因此数学公式需要下载到本地用Typora等编辑器打开才能浏览。
 
-# 目录
+# 已完成部分
 
-- 逻辑回归
+- 逻辑回归（笔记+代码）
 
-  [笔记](https://github.com/1033020837/Basic4AI/blob/master/Document/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92.md)
+- 决策树（笔记）
 
-- 决策树
+- 随机森林（笔记）
 
-  [笔记](https://github.com/1033020837/Basic4AI/blob/master/Document/%E5%86%B3%E7%AD%96%E6%A0%91.md)
+- GBDT（笔记）
 
-- 随机森林
+- XGBoost（笔记）
 
-  [笔记](https://github.com/1033020837/Basic4AI/blob/master/Document/%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97.md)
+- CRF（笔记）
 
-- GBDT
+- LSTM+CRF（笔记）
+- KNN（笔记+代码）
+- 最大熵（笔记+代码）
 
-  [笔记](https://github.com/1033020837/Basic4AI/blob/master/Document/GBDT.md)
-
-- XGBoost
-
-  [笔记](https://github.com/1033020837/Basic4AI/blob/master/Document/XGBoost.md)
-
-- CRF
-
-  [笔记](https://github.com/1033020837/Basic4AI/blob/master/Document/CRF.md)
-
-- LSTM+CRF
-
-  [笔记](https://github.com/1033020837/Basic4AI/blob/master/Document/LSTM%2BCRF.md)
+# 正在进行中的部分
 
 - SVM
 
-  [笔记](https://github.com/1033020837/Basic4AI/blob/master/Document/SVM.md)
+
+# 待添加部分
+
+- HMM
+- NN（BP、CNN、RNN）
+- NB
+- 聚类
+- AdaBoost
+- EM
+- 降维算法
+- 自然语言处理相关技术（词嵌入、预训练模型等）
+
