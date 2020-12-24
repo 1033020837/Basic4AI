@@ -19,8 +19,7 @@ def load_data():
 
     digits = load_digits()
     xs = digits.data.tolist()
-    ys = digits.target.tolist()
-
+    ys = (digits.target > 4).astype(int).tolist()
     return xs, ys
 
 
@@ -41,12 +40,12 @@ class MaxEntropy:
         self.m = len(train_xs[0])  # 原始输入特征的数量，需要跟特征函数的数量区分开
         self.N = len(train_xs)  # 训练样本数目
         self.features, self.feature_count = self.get_features()  # 所有特征   特征函数数量
-        self.M = self.feature_count                    # 假定任意样本中所有特征函数的和是固定值，简化IIS算法
+        self.M = self.m                    # 假定任意样本中所有特征函数的和是固定值，简化IIS算法
         self.w = [0] * self.feature_count  # 所有特征的权重
         self.xy2id, self.id2xy = self.createSearchDict()  # 特征->id、id->特征 的对应字典
         self.Ep_xy = self.get_Ep_xy()  # 特征函数f(x, y)关于经验分布P_(x, y)的期望值
 
-    def get_epxy(self):
+    def get_Epxy(self):
         '''
         计算特征函数f(x, y)关于模型P(Y|X)与经验分布P_(X, Y)的期望值
         即“6.2.2 最大熵模型的定义”中第二个期望（83页最上方的期望）
@@ -85,7 +84,7 @@ class MaxEntropy:
             # 遍历每个特征中的(x, y)对
             for (x, y) in self.features[feature]:
                 # 获得其id
-                id = self.features[feature][(x, y)]
+                id = self.xy2id[feature][(x, y)]
                 # 将计算得到的Ep_xy写入对应的位置中
                 # fixy中存放所有对在训练集中出现过的次数，处于训练集总长度N就是概率了
                 Ep_xy[id] = self.features[feature][(x, y)] / self.N
@@ -169,17 +168,19 @@ class MaxEntropy:
         # 计算分母的z
         Z = np.sum(numerators)
         # 返回Pw(y|x)
-        return numerators / Z
+        res = numerators / Z
+        return res
 
-    def maxEntropyTrain(self, iter=200):
-        # 设置迭代次数寻找最优解
+    def iis_train(self, iter=200):
+        # 使用iis进行训练
         for i in tqdm(range(iter)):
 
             # 计算“6.2.3 最大熵模型的学习”中的第二个期望（83页最上方哪个）
-            Epxy = self.get_epxy()
+            Epxy = self.get_Epxy()
             # 使用的是IIS，所以设置sigma列表
             sigmaList = [0] * self.feature_count
             # 对于所有的n进行一次遍历
+            
             for j in range(self.feature_count):
                 # 依据“6.3.1 改进的迭代尺度法” 式6.34计算
                 sigmaList[j] = (1 / self.M) * np.log(self.Ep_xy[j] / Epxy[j])
@@ -189,6 +190,7 @@ class MaxEntropy:
             if (i+1) % 5 == 0:
                 accuracy = self.test()
                 print('the accuracy is:%.4f' % accuracy)
+
 
     def predict(self, X):
         '''
@@ -217,9 +219,8 @@ class MaxEntropy:
 
 
 if __name__ == '__main__':
-    start = time.time()
-
     features, targets = load_data()
+    
 
     train_count = int(len(features)*0.8)
 
@@ -230,10 +231,8 @@ if __name__ == '__main__':
     maxEnt = MaxEntropy(train_xs, train_ys, test_xs, test_ys)
     # 开始训练
     print('start to train')
-    maxEnt.maxEntropyTrain()
+    maxEnt.iis_train()
     # 开始测试
     print('start to test')
-    accuracy = maxEnt.test()
-    print('the accuracy is:', accuracy)
-    # 打印时间
-    print('time span:', time.time() - start)
+    accuracy = maxEnt.test()    # 200轮准确率为86.39%
+    print('the accuracy is:%.4f'%accuracy)

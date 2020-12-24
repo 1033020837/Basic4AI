@@ -141,6 +141,8 @@ if __name__ == '__main__':
     digits = load_digits()
     features = digits.data
     targets = digits.target
+
+    # 随机打乱数据
     shuffle_indices = np.random.permutation(features.shape[0])
     features = features[shuffle_indices]
     targets = targets[shuffle_indices]
