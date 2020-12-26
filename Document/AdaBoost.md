@@ -79,25 +79,43 @@
      $$
      令$\overline w_{mi}=e^{-y_if_{m-1}(x_i)}$，则上式子可以化为：
      $$
-     (\alpha_m,G_m(x))=\arg\min_{\alpha_m,G_m(x)}\sum_{i=1}^N\overline w_{mi}e^{-\alpha_my_iG_m(x_i)}
-     \\=\arg\min_{\alpha_m,G_m(x)}e^{-\alpha_m}\sum_{y_i=G_m(x_i)}\overline w_{mi}+e^{\alpha_m}\sum_{y_i\ne G_m(x_i)}\overline w_{mi}
-     \\=\arg\min_{\alpha_m,G_m(x)}e^{-\alpha_m}(\sum_{i=1}^N\overline w_{mi}-\sum_{y_i\ne G_m(x_i)}\overline w_{mi})+e^{\alpha_m}\sum_{y_i\ne G_m(x_i)}\overline w_{mi}
-     \\=\arg\min_{\alpha_m,G_m(x)}e^{-\alpha_m}\sum_{i=1}^N\overline w_{mi}+(e^{\alpha_m}-e^{-\alpha_m})\sum_{y_i\ne G_m(x_i)}\overline w_{mi}
-     \\=\arg\min_{\alpha_m,G_m(x)}e^{-\alpha_m}\sum_{i=1}^N\overline w_{mi}+(e^{\alpha_m}-e^{-\alpha_m})\sum_{i=1}^N\overline w_{mi}I(y_i\ne G_m(x_i))
+     (\alpha_m,G_m)=\arg\min_{\alpha_m,G_m(x)}\sum_{i=1}^N\overline w_{mi}e^{-\alpha_my_iG_m(x_i)}
+     \\=\arg\min_{\alpha_m,G_m}e^{-\alpha_m}\sum_{y_i=G_m(x_i)}\overline w_{mi}+e^{\alpha_m}\sum_{y_i\ne G_m(x_i)}\overline w_{mi}
+     \\=\arg\min_{\alpha_m,G_m}e^{-\alpha_m}(\sum_{i=1}^N\overline w_{mi}-\sum_{y_i\ne G_m(x_i)}\overline w_{mi})+e^{\alpha_m}\sum_{y_i\ne G_m(x_i)}\overline w_{mi}
+     \\=\arg\min_{\alpha_m,G_m}e^{-\alpha_m}\sum_{i=1}^N\overline w_{mi}+(e^{\alpha_m}-e^{-\alpha_m})\sum_{y_i\ne G_m(x_i)}\overline w_{mi}
+     \\=\arg\min_{\alpha_m,G_m}e^{-\alpha_m}\sum_{i=1}^N\overline w_{mi}+(e^{\alpha_m}-e^{-\alpha_m})\sum_{i=1}^N\overline w_{mi}I(y_i\ne G_m(x_i))
      $$
      对于固定的$\alpha_m$，上式中$e^{-\alpha_m}\sum_{i=1}^N\overline w_{mi}$和$e^{\alpha_m}-e^{-\alpha_m}$都是定值，则上式等价于：
      $$
-     \arg\min_{G_m(x)}\sum_{i=1}^N\overline w_{mi}I(y_i\ne G_m(x_i))
+     G_m^*=\arg\min_{G_m}\sum_{i=1}^N\overline w_{mi}I(y_i\ne G_m(x_i))
      $$
      这与AdaBoost中要寻找的基本分类器一致。
 
      然后对$\alpha_m$求导并使其等于0，得：
      $$
-     
+     \alpha_m^*=\frac{1}{2}\ln \frac{1-e_m}{e_m}
+     \\e_m=\frac{\sum_{i=1}^N\overline w_{mi}I(y_i\ne G_m(x_i))}{\sum_{i=1}^N\overline w_{mi}}
      $$
      
+     令$w_{mi}=\frac{\overline w_{mi}}{\sum_{i=1}^N\overline w_{mi}}$，得$e_m=\sum_{i=1}^Nw_{mi}I(y_i\ne G_m(x_i))$，这与AdaBoost一致。特别地，当$m=0$时，$\overline w_{mi}=e^{-y_i*0}=1,w_{mi}=\frac{1}{N}=\frac{\overline w_{mi}}{\sum_{i=1}^N\overline w_{mi}}$。
+     
+     由$\overline w_{mi}=e^{-y_if_{m-1}(x_i)}$以及$f_m(x_i)==f_{m-1}(x)+\alpha_mG_m(x_i)$得：
+     $$
+     \overline w_{m+1,i}=\overline w_{mi}e^{-y_i\alpha_mG_m(x_i)}
+     $$
+     由$w_{m+1,i}=\frac{\overline w_{m+1,i}}{\sum_{i=1}^N\overline w_{m+1,i}}$以及上式得：
+     $$
+     w_{m+1,i}=\frac{\overline w_{mi}e^{-y_i\alpha_mG_m(x_i)}}{\sum_{i=1}^N\overline w_{mi}e^{-y_i\alpha_mG_m(x_i)}}
+     \\=\frac{\frac{\overline w_{mi}}{\sum_{i=1}^N\overline w_{mi}}e^{-y_i\alpha_mG_m(x_i)}}{\sum_{i=1}^N\frac{\overline w_{mi}}{\sum_{i=1}^N\overline w_{mi}}e^{-y_i\alpha_mG_m(x_i)}}
+     \\=\frac{w_{mi}e^{-y_i\alpha_mG_m(x_i)}}{\sum_{i=1}^Nw_{mi}e^{-y_i\alpha_mG_m(x_i)}}
+     $$
+     与AdaBoost一致。
+     
+     综上，模型是加法模型、损失函数为指数函数、学习算法为前向分步算法时可以推导出AdaBoost。
 
    ​         
 
-3. 
+   
+
+   
 
