@@ -55,7 +55,9 @@
 
    由几何性质有$\alpha_i\ge0$(参考：https://www.cnblogs.com/liaohuiqiang/p/7805954.html，当不等式约束不起作用时$\alpha_i=0$，当不等式约束起作用时约束函数与原函数在最优解处梯度方向相反，$\alpha_i>0$)，直观理解为：若$\alpha_i<0$，由于$g_i\le0$，则$L(w,b,\alpha)$将不存在极值。
 
-   由于$\alpha_i\ge0,g_i\le0$，因此$\sum_{i=1}^n\alpha_ig_i\le0$，因此$\max_{\alpha_i\ge0}L(w,b,\alpha)=\frac{1}{2}||w||^2$，因此原问题求解$\min\frac{1}{2}||w||^2$可转化为求解$\min\max_{\alpha_i\ge0}L(w,b,\alpha)$，令$\theta(\alpha)=\max_{\alpha}L(w,b,\alpha)$，$\theta(w,b)=\min_{w,b} L(w,b,\alpha)$，则$\theta(w,b)=\min_{w,b}L(w,b,\alpha)\le\min_{w,b}\max_{\alpha}L(w,b,\alpha)\le\min_{w,b}\theta(\alpha)\le\theta(\alpha)$，该式对所有的$w,b,\alpha$均成立，则$\max_{\alpha}\min_{w,b}L(w,b,\alpha)\le\min_{w,b}\max_{\alpha}L(w,b,\alpha)$恒成立，当L满足强对偶条件时取等号，强对偶条件即为下面所介绍的KKT条件。
+   由于$\alpha_i\ge0,g_i\le0$，因此$\sum_{i=1}^n\alpha_ig_i\le0$，因此$\max_{\alpha_i\ge0}L(w,b,\alpha)=\frac{1}{2}||w||^2$，因此原问题求解$\min\frac{1}{2}||w||^2$可转化为求解$\min\max_{\alpha_i\ge0}L(w,b,\alpha)$。
+
+   记$min_{w,b}\max_{\alpha}L(w,b,\alpha)$为原始问题，解为$w_1,b_1,\alpha_1$；$\max_{\alpha}\min_{w,b}L(w,b,\alpha)$为对偶问题，解为$w_2,b_2,\alpha_2$。易得$L(w_2,b_2,\alpha_2)\le L(w_1,b_1,\alpha_2) \le L(w_1,b_1,\alpha_1)$，则$\max_{\alpha}\min_{w,b}L(w,b,\alpha)\le\min_{w,b}\max_{\alpha}L(w,b,\alpha)$恒成立，当L满足强对偶条件时取等号，强对偶条件即为下面所介绍的KKT条件。
 
    参考：https://www.pianshen.com/article/15821257925/，通过引入松弛变量将不等式转化为等式并求导后可以得到以下KKT条件：
    $$
@@ -69,4 +71,45 @@
 
 3. SVM优化问题求解
 
+   为了求解对偶问题，需要先求$L(w,b,\alpha)$对于$w,b$的极小，再求对$\alpha$的极大。
+   
+   - 求$\min_{w,b}L(w,b,\alpha)$
+   
+     对w和b求偏导：
+     $$
+     \frac{\partial L(w,b,\alpha)}{\partial w}=w-\sum_{i=1}^n\alpha{_i}y_ix_i
+     \\\frac{\partial L(w,b,\alpha)}{\partial b}=-\sum_{i=1}^n\alpha{_i}y_i
+     $$
+     令偏导数等于0得：
+     $$
+     w=\sum_{i=1}^n\alpha{_i}y_ix_i
+     \\\sum_{i=1}^n\alpha{_i}y_i=0
+     $$
+     代回到$L(w,b,\alpha)$的表达式得：
+     $$
+     L(w,b,\alpha)=\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^n\alpha{_i}y_i\alpha{_j}y_j(x_i^Tx_j)+\sum_{i=1}^n\alpha{_i}-\sum_{i=1}^n\alpha{_i}y_i((\sum_{j=1}^n\alpha{_j}y_jx_j^T)x_i+b)
+     \\=-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^n\alpha{_i}y_i\alpha{_j}y_j(x_i^Tx_j)+\sum_{i=1}^n\alpha{_i}
+     $$
+   
+   - 求$\min_{w,b}L(w,b,\alpha)$对$\alpha$的极大，即：
+     $$
+     \max_{\alpha}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^n\alpha{_i}y_i\alpha{_j}y_j(x_i^Tx_j)+\sum_{i=1}^n\alpha{_i}
+     \\s.t.\quad \sum_{i=1}^n\alpha{_i}y_i=0
+     \\\alpha_i\ge 0, i=1,2,...,n
+     $$
+     将极大问题转化为极小问题：
+     $$
+     \min_{\alpha}\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^n\alpha{_i}y_i\alpha{_j}y_j(x_i^Tx_j)-\sum_{i=1}^n\alpha{_i}
+     \\s.t.\quad \sum_{i=1}^n\alpha{_i}y_i=0
+     \\\alpha_i\ge 0, i=1,2,...,n
+     $$
+     具体求解过程在后面介绍。假设求得$\alpha$的解为$\alpha^*$，则相应的w和b为：
+     $$
+     w^*=\sum_{i=1}^n\alpha{_i}^*y_ix_i
+     \\b^*=y_j-\sum_{i=1}^n\alpha{_i}^*y_i(x_i^Tx_j),j满足\alpha_j^*>0
+     $$
+     $w^*和b^*$的求解只依赖于训练数据中对应于$\alpha_i^*>0$的样本点，将这些点称为支持向量。
+   
+   
+   
    
