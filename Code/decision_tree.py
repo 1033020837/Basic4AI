@@ -8,10 +8,15 @@ from sklearn.datasets import load_digits
 
 class DecisionTree(object):
 
-    def __init__(self, _type='ID3') -> None:
+    def __init__(self, _type='ID3', predict_type='classification') -> None:
+        '''
+        _type 决策树类型
+        predict_type 预测类型 classification 分类 regression 回归
+        '''
         super().__init__()
 
         assert _type in ['ID3','C4.5','CART']
+        assert predict_type in ['classification','regression']
 
         self.type = _type
 
