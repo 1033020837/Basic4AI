@@ -8,26 +8,26 @@
 
 Document文件夹下为笔记，Code文件夹下为代码，Data文件夹下为某些代码所使用的数据集。
 
-# 机器学习基础
+# 机器学习
 
-- 感知机（[笔记](Document/感知机.md)+[代码](Document/感知机.md)）
-- KNN（笔记+代码）
-- 朴素贝叶斯（笔记）
-- 决策树（笔记+代码）
-- 逻辑回归（笔记+代码）
-- 最大熵（笔记+代码）
-- SVM（笔记+代码）
-- AdaBoost（笔记+代码）
-- GBDT（笔记）
-- EM算法（笔记+代码）
-- 隐马尔可夫模型（笔记+代码）
-- 条件随机场（笔记）
-- 随机森林（笔记）
-- XGBoost（笔记）
+- 感知机（[笔记](Document/感知机.md)+[代码](Code/perceptron.py)）
+- KNN（[笔记](Document/KNN.md)+[代码](Code/knn.py)）
+- 朴素贝叶斯（[笔记](Document/朴素贝叶斯.md)）
+- 决策树（[笔记](Document/决策树.md)+[代码](Code/decision_tree.py)）
+- 逻辑回归（[笔记](Document/逻辑回归.md)+[代码](Code/logistic_regression.py)）
+- 最大熵（[笔记](Document/最大熵.md)+[代码](Code/max_entropy.py)）
+- SVM（[笔记](Document/SVM.md)+[代码](Code/svm.py)）
+- AdaBoost（[笔记](Document/AdaBoost.md)+[代码](Code/adaboost.py)）
+- GBDT（[笔记](Document/GBDT.md)）
+- EM算法（[笔记](Document/EM算法.md)+[代码](Code/em.py)）
+- 隐马尔可夫模型（[笔记](Document/隐马尔可夫模型.md)+[代码](Code/hmm.py)）
+- 条件随机场（[笔记](Document/CRF.md)）
+- 随机森林（[笔记](Document/随机森林.md)）
+- XGBoost（[笔记](Document/XGBoost.md)）
 
 # 自然语言处理
 
-- LSTM+CRF（笔记）
+- LSTM+CRF（[笔记](Document/LSTM+CRF.md)）
 
 
 # 待添加部分
