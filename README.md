@@ -4,7 +4,7 @@
 
 目前主要参考李航老师的《统计学习方法》一书，也结合了知乎、CSDN等众多博客的内容，完成了大部分机器学习模型的笔记和代码。也有一些内容例如**XGBoost**、**LSTM+CRF**是书中未提及的。
 
-由于github的markdown解析器不支持latex，因此数学公式需要下载到本地使用Typora等编辑器才能浏览。
+由于github的markdown解析器不支持latex，因此数学公式需要下载到本地使用Typora等编辑器才能正常浏览。
 
 Document文件夹下为笔记，Code文件夹下为代码，Data文件夹下为某些代码所使用的数据集。
 
@@ -22,7 +22,7 @@ Document文件夹下为笔记，Code文件夹下为代码，Data文件夹下为�
 - EM算法（[笔记](Document/EM算法.md)+[代码](Code/em.py)）
 - 隐马尔可夫模型（[笔记](Document/隐马尔可夫模型.md)+[代码](Code/hmm.py)）
 - 条件随机场（[笔记](Document/CRF.md)）
-- 随机森林（[笔记](Document/随机森林.md)）
+- 随机森林（[笔记](Document/随机森林.md)+[代码](Code/random_forest.py)）
 - XGBoost（[笔记](Document/XGBoost.md)）
 
 # 自然语言处理
