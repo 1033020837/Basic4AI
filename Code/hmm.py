@@ -4,7 +4,7 @@
 数据集使用BIO格式进行标注
 """
 
-from data_util import build_corpus
+from data_util import load_seq_label_corpus
 import numpy as np
 
 
@@ -118,9 +118,9 @@ class HMM(object):
 if __name__ == '__main__':
     data_dir = '../Data/RenMinRiBao/'
     train_word_lists, train_tag_lists, word2id, tag2id = \
-        build_corpus(data_dir + 'example.train')
-    # dev_word_lists, dev_tag_lists = build_corpus(data_dir + 'example.dev', make_vocab=False)
-    test_word_lists, test_tag_lists = build_corpus(data_dir + 'example.test', make_vocab=False)
+        load_seq_label_corpus(data_dir + 'example.train')
+    # dev_word_lists, dev_tag_lists = load_seq_label_corpus(data_dir + 'example.dev', make_vocab=False)
+    test_word_lists, test_tag_lists = load_seq_label_corpus(data_dir + 'example.test', make_vocab=False)
 
     hmm = HMM(len(word2id), len(tag2id), word2id, tag2id)
     hmm.train(train_word_lists, train_tag_lists)
