@@ -10,11 +10,14 @@ from sklearn.datasets import load_boston    # 波士顿房价预测，用于回�
 
 class DecisionTree(object):
 
-    def __init__(self, _type='ID3', predict_type='classification', split_count=10) -> None:
+    def __init__(self, _type='ID3', predict_type='classification', split_count=10,\
+                 max_depth=float('inf'), max_features=-1) -> None:
         '''
         _type 决策树类型
         predict_type 预测类型 classification 分类 regression 回归
         split_count 对于连续属性切分的次数
+        max_depth 决策树最大深度
+        max_features 每一次决策树分裂时随机所选属性数目，方便随机森林随机选择特征进行分裂
         '''
         super().__init__()
 
@@ -24,30 +27,43 @@ class DecisionTree(object):
         self.type = _type
         self.predict_type = predict_type
         self.split_count = split_count
+        self.max_depth = max_depth
+        self.max_features = max_features
 
         if _type != 'CART' and predict_type == 'regression':
             raise NotImplementedError()
 
         self.tree = None
+        self.predict_values = None    # 保存每个训练样本的预测值，方便GBDT快速获取每个训练样本的预测值
 
-    def build_tree(self, datas, targets, attr_type):
+    def build_tree(self, datas, targets, attr_type, depth, data_ids=None):
         '''
         递归构建树
         对于 ID3 C4.5 只支持所有属性均为离散类型
         attr_type   属性类型，0代表离散，1代表连续 list  (m,)
+        depth 树深度
+        data_ids 每个样本的id，方便在每个叶节点将每个样本的预测值保存，以便GBDT快速获取每个训练样本的预测值
         '''
 
-        self.attr_type = attr_type  # 将每个属性的类别保存为实例变量方便测试的时候使用
+        if self.predict_values is None: # 初始化训练样本的预测值
+            self.predict_values = np .zeros((datas.shape[0],))
+            
+
         m = len(attr_type)
         n = datas.shape[0]
 
         tree = {'is_leaf':False}
+        tree['attr_type'] = attr_type   # 保存每个属性的类别方便测试的时候使用
 
         # 判断是否符合终止条件
-        # 样本数为0、所有样本属于同一类别、每个特征都只有一种取值
-        if len(datas) == 0 or len(np.unique(targets)) == 1 or self._is_all_attr_unique(datas):
+        # 样本数为0、所有样本属于同一类别、每个特征都只有一种取值、树深度超过最大深度
+        if len(datas) == 0 or len(np.unique(targets)) == 1 or \
+            self._is_all_attr_unique(datas) or depth > self.max_depth:
             tree['is_leaf'] = True
             tree['label'] = self._majority_vote(targets)
+            if data_ids is not None:
+                for data_id in data_ids:
+                    self.predict_values[data_id] = tree['label']
             return tree
 
         # 计算原数据集的信息熵
@@ -62,7 +78,13 @@ class DecisionTree(object):
         # CART 对于回归问题，保存分割后的最低平方误差、分割特征、特征阈值
         cart_split_cache = [float('inf'),-1,-1]
 
-        for i in range(m):
+        # 随机选取max_features个属性
+        if self.max_features != -1 and self.max_features < len(attr_type):
+            sample_attr_incides = np.random.choice(len(attr_type),self.max_features, replace=False)
+        else:
+            sample_attr_incides = range(m)
+
+        for i in sample_attr_incides:
             if attr_type[i] == 0:
                 uniques,counts = np.unique(datas[:,i], return_counts=True)
                 if self.type in ['ID3','C4.5']:
@@ -114,7 +136,7 @@ class DecisionTree(object):
         
         if self.type in ['ID3','C4.5']:
             if self.type == 'ID3':
-                best_feat = np.argmax(gains)    # 挑选信息增益最大的特征切分
+                best_feat = sample_attr_incides[np.argmax(gains)]    # 挑选信息增益最大的特征切分
             else:
                 # 先计算平均信息增益
                 mean_gain = np.mean(gains)
@@ -124,14 +146,18 @@ class DecisionTree(object):
                     # 在信息增益大于均值的特征中挑选信息增益率最高的特征切分
                     if gain >= mean_gain and gain_ratio > best_gain_ratio:
                         best_gain_ratio = gain_ratio
-                        best_feat = index
+                        best_feat = sample_attr_incides[index]
             tree['best_feat'] = best_feat
             tree['childs'] = {}
             uniques = np.unique(datas[:,best_feat])
             for value in uniques:
                 indicies = datas[:,best_feat] == value
                 sub_datas = np.hstack((datas[indicies,:best_feat],datas[indicies,best_feat+1:]))
-                tree['childs'][value] = self.build_tree(sub_datas,targets[indicies],attr_type[:best_feat]+attr_type[best_feat+1:])
+                sub_data_ids = None
+                if data_ids is not None:
+                    sub_data_ids = data_ids[indicies]
+                tree['childs'][value] = self.build_tree(sub_datas,targets[indicies],attr_type[:best_feat]+attr_type[best_feat+1:],\
+                                depth+1,sub_data_ids)
         else:
             tree['best_feat'] = cart_split_cache[1:]
             tree['childs'] = {}
@@ -139,12 +165,24 @@ class DecisionTree(object):
             if attr_type[cart_split_cache[1]] == 0: # 对于离散属性，将等于选取特征最佳取值的样本分到左子树，不等于最佳取值的样本分到右子树
                 indicies = datas[:,cart_split_cache[1]] == cart_split_cache[2]
                 sub_datas = np.hstack((datas[indicies,:cart_split_cache[1]],datas[indicies,cart_split_cache[1]+1:]))
-                tree['childs']['left'] = self.build_tree(sub_datas,targets[indicies],attr_type[:cart_split_cache[1]]+attr_type[cart_split_cache[1]+1:])
-                tree['childs']['right'] = self.build_tree(datas[~indicies],targets[~indicies],attr_type)
+                sub_data_ids_left = None
+                sub_data_ids_right = None
+                if data_ids is not None:
+                    sub_data_ids_left = data_ids[indicies]
+                    sub_data_ids_right = data_ids[~indicies]
+                tree['childs']['left'] = self.build_tree(sub_datas,targets[indicies],\
+                    attr_type[:cart_split_cache[1]]+attr_type[cart_split_cache[1]+1:],depth+1,sub_data_ids_left)
+                tree['childs']['right'] = self.build_tree(datas[~indicies],targets[~indicies],attr_type,\
+                                depth+1,sub_data_ids_right)
             else:   # 对于连续属性，将小于选取特征阈值的样本分到左子树，大于选取特征阈值的样本分到右子树
                 indicies = datas[:,cart_split_cache[1]] <= cart_split_cache[2]
-                tree['childs']['left'] = self.build_tree(datas[indicies],targets[indicies],attr_type)
-                tree['childs']['right'] = self.build_tree(datas[~indicies],targets[~indicies],attr_type)
+                sub_data_ids_left = None
+                sub_data_ids_right = None
+                if data_ids is not None:
+                    sub_data_ids_left = data_ids[indicies]
+                    sub_data_ids_right = data_ids[~indicies]
+                tree['childs']['left'] = self.build_tree(datas[indicies],targets[indicies],attr_type,depth+1,sub_data_ids_left)
+                tree['childs']['right'] = self.build_tree(datas[~indicies],targets[~indicies],attr_type,depth+1,sub_data_ids_right)
 
         return tree
 
@@ -178,7 +216,7 @@ class DecisionTree(object):
             return self.predict(tree['childs'][data[tree['best_feat']]],np.hstack((data[:tree['best_feat']],data[tree['best_feat']+1:])))
         else:
             best_feat,value = tree['best_feat']
-            if self.attr_type[best_feat] == 0: # 对于离散属性，将等于选取特征最佳取值的样本分到左子树，不等于最佳取值的样本分到右子树
+            if tree['attr_type'][best_feat] == 0: # 对于离散属性，将等于选取特征最佳取值的样本分到左子树，不等于最佳取值的样本分到右子树
                 if data[best_feat] == value:
                     return self.predict(tree['childs']['left'],np.hstack((data[:best_feat],data[best_feat+1:])))
                 else:
@@ -289,6 +327,7 @@ if __name__ == '__main__':
         features = boston.data
         targets = boston.target
 
+    np.random.seed(2021)
     # 随机打乱数据
     shuffle_indices = np.random.permutation(features.shape[0])
     features = features[shuffle_indices]
@@ -305,18 +344,18 @@ if __name__ == '__main__':
     else:   # CART既可以处理离散属性，也可以处理连续属性
         attr_type = [1] * train_datas.shape[1]
 
-    decision_tree = DecisionTree(_type=_type, predict_type=predict_type)
+    decision_tree = DecisionTree(_type=_type, predict_type=predict_type, max_depth=3)
 
-    decision_tree.tree = decision_tree.build_tree(train_datas, train_targets, attr_type)
+    decision_tree.tree = decision_tree.build_tree(train_datas, train_targets, attr_type, 0)
 
     print('Before prune:')
     decision_tree.test(test_datas, test_targets)
 
-    # 剪枝
-    decision_tree.prune(decision_tree.tree, train_datas, train_targets, alpha=10)
+    # # 剪枝
+    # decision_tree.prune(decision_tree.tree, train_datas, train_targets, alpha=10)
 
-    print('After prune:')
-    decision_tree.test(test_datas, test_targets)
+    # print('After prune:')
+    # decision_tree.test(test_datas, test_targets)
 
 
 

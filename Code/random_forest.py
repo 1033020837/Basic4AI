@@ -1,5 +1,5 @@
 """
-随机森林
+随机森林多线程实现
 """
 
 from decision_tree import DecisionTree
@@ -7,14 +7,14 @@ import numpy as np
 import threading
 from sklearn.datasets import load_digits    # 手写数字类别预测，用于分类任务
 from sklearn.datasets import load_boston    # 波士顿房价预测，用于回归任务
-
+from sklearn.ensemble import RandomForestRegressor
 
 class RandomForest(object):
 
     def __init__(self, tree_count = 50, attr_ratio = 0.5, _type='CART', predict_type='classification', split_count=10, thread_count=5) -> None:
         '''
         tree_count 决策树数量
-        attr_ratio 每一刻决策树所选属性数目占总属性数目的比例
+        attr_ratio 每一次决策树分裂时随机所选属性数目占总属性数目的比例
         _type 决策树类型
         predict_type 预测类型 classification 分类 regression 回归
         split_count 对于连续属性切分的次数
@@ -50,30 +50,26 @@ class RandomForest(object):
                 tree_count = self.tree_count - (self.thread_count - 1) * per_count
             else:
                 tree_count = per_count
-            thread = threading.Thread(target=self.train_process, args=(datas, targets, attr_type, tree_count))
+            thread = threading.Thread(target=self.train_thread, args=(datas, targets, attr_type, tree_count))
             threads.append(thread)
         for thread in threads:
             thread.start()
             thread.join()
 
-    def train_process(self, datas, targets, attr_type, tree_count):
+    def train_thread(self, datas, targets, attr_type, tree_count):
         '''
         单线程训练函数
         构建一部分树
         tree_count 本进程要构建的树的数目
         '''
+        max_features = int(datas.shape[0] * self.attr_ratio)
         for _ in range(tree_count):
             # 随机有放回挑选与数据集样本数目相同的样本
             sample_incides = np.random.choice(datas.shape[0],datas.shape[0])
             sample_datas, sample_targets = datas[sample_incides], targets[sample_incides]
-            # 随机选取attr_ratio比例的属性
-            sample_attr_incides = np.random.choice(len(attr_type),int(len(attr_type) * self.attr_ratio), replace=False)
-            sample_attr_incides = sorted(sample_attr_incides)
-            sample_datas = sample_datas[:,sample_attr_incides]
-            sample_attr_type = [x for i,x in enumerate(attr_type) if i in sample_attr_incides]
-            tree = DecisionTree(self.type, self.predict_type, self.split_count)
-            tree.tree = tree.build_tree(sample_datas, sample_targets, sample_attr_type)
-            self.trees.append([tree,sample_attr_incides]) # 保存树以及所选属性
+            tree = DecisionTree(self.type, self.predict_type, self.split_count, max_features=max_features)
+            tree.tree = tree.build_tree(sample_datas, sample_targets, attr_type, 0)
+            self.trees.append(tree) # 保存树以及所选属性
 
     def test(self, datas, targets):
         '''
@@ -98,8 +94,8 @@ class RandomForest(object):
         data 单个样本
         '''
         predict_targets = []    # 所有树的投票结果
-        for tree, sample_attr_incides in self.trees:
-            predict_target = tree.predict(tree.tree, data[sample_attr_incides])
+        for tree in self.trees:
+            predict_target = tree.predict(tree.tree, data)
             predict_targets.append(predict_target)
         
         # 投票或者取平均
@@ -146,8 +142,10 @@ if __name__ == '__main__':
     else:   # CART既可以处理离散属性，也可以处理连续属性
         attr_type = [1] * train_datas.shape[1]
 
-    tree_count = 20
-    attr_ratio = 0.5
-    random_forest = RandomForest(tree_count=tree_count, attr_ratio=attr_ratio, _type=_type, predict_type=predict_type)
+    tree_count = 50
+    attr_ratio = 0.8
+    random_forest = RandomForest(tree_count=tree_count, attr_ratio=attr_ratio,\
+         _type=_type, predict_type=predict_type,thread_count=10)
     random_forest.train(train_datas, train_targets, attr_type)
     random_forest.test(test_datas, test_targets)
+
