@@ -13,20 +13,20 @@
    CRF通常存在两类特征函数，第一类特征函数是定义在边上的特征函数，称为转移函数，依赖于当前和前一个位置；第二类特征函数是定义在结点的特征函数，称为状态函数，依赖于当前位置。两类特征函数此处均用$f(y_{i-1},y_i,x,i)$表示，设有K个特征函数，第k个特征函数$f_k(y_{i-1},y_i,x,i)$对应的权重为$w_k$，则在随机变量X取值为x的时候随机变量Y取值为y的条件概率为：
    $$
    P(y|x)=\frac{e^{\sum_{k=1}^{K}w_k\sum_{i=1}^{n}f_k(y_{i-1},y_i,x,i)}}{Z(x)}
-   \\ Z(x)=\sum_ye^{\sum_{k=1}^{K}w_k\sum_{i=1}^{n}f_k(y_{i-1},y_i,x,i)}
+   \\\\ Z(x)=\sum_ye^{\sum_{k=1}^{K}w_k\sum_{i=1}^{n}f_k(y_{i-1},y_i,x,i)}
    $$
    
    其中n为序列x的长度，令
    $$
    F_k(x,y)=\sum_{i=1}^{n}f_k(y_{i-1},y_i,x,i)
-   \\ F(x,y)=[F_1,...,F_K]^T
-   \\ F(y_{i-1},y_i,x,i)=[f_1(y_{i-1},y_i,x,i),...,f_K(y_{i-1},y_i,x,i)]^T
-   \\ w=[w_1,...,w_K]^T
+   \\\\ F(x,y)=[F_1,...,F_K]^T
+   \\\\ F(y_{i-1},y_i,x,i)=[f_1(y_{i-1},y_i,x,i),...,f_K(y_{i-1},y_i,x,i)]^T
+   \\\\ w=[w_1,...,w_K]^T
    $$
    则上式可以改写为：
    $$
    P(y|x)=\frac{e^{w^TF(x,y)}}{Z_w(x)}
-   \\ Z_w(x)=\sum_ye^{w^TF(x,y)}
+   \\\\ Z_w(x)=\sum_ye^{w^TF(x,y)}
    $$
    对$P(y|x)$取对数得：
    $$
@@ -49,26 +49,26 @@
    设m为添加了开始、结束标签后标签的个数，m维向量$\alpha_i$的任意一维表示i时刻取该维度对应标签的所有路径到位置i的前半部分的得分取指数的和，则：
    $$
    \alpha_0=\left\{\begin{aligned}
-   1 \qquad if\quad t_j=start \\
+   1 \qquad if\quad t_j=start \\\\
    0 \qquad\qquad otherwise
    \end{aligned}\right.
-   \\ \alpha_i=(\alpha_{i-1}^TM_i(x))^T \quad i=1,2,...,n+1
+   \\\\ \alpha_i=(\alpha_{i-1}^TM_i(x))^T \quad i=1,2,...,n+1
    $$
    设m维向量$\beta_i$的任意一维表示i时刻取该维度对应标签的所有路径从位置i+1开始的后半部分的得分取指数的和，则：
    $$
    \beta_{n+1}=\left\{\begin{aligned}
-   1 \qquad if\quad t_j=end\\
+   1 \qquad if\quad t_j=end \\\\
    0 \quad\qquad otherwise
    \end{aligned}\right.
    
-   \\ \beta_i=M_{i+1}(x)\beta_{i+1} \quad i=n,n-1,...,0
+   \\\\ \beta_i=M_{i+1}(x)\beta_{i+1} \quad i=n,n-1,...,0
    $$
    根据以上定义的两个前向、后向向量，可以很容易得到以下几个计算公式：
    $$
    Z_w(x)=\boldsymbol{1}^T\alpha_n=\boldsymbol{1}^T\beta_0=\alpha_i^T\beta_i=(M_1(x)M_2(x),...,M_{n+1}(x))[start,end]
-   \\P(y|x)=\frac{\prod_{i=1}^{n+1}M_i(y_{i-1},y_i|x)}{Z_w(x)}
-   \\P(y_i|x)=\frac{\alpha_i[y_i]\beta_i[y_i]}{Z_w(x)}
-   \\P(y_{i-1},y_i|x)=\frac{\alpha_{i-1}[y_{i-1}]M_i(y_{i-1},y_i|x)\beta_i[y_i]}{Z_w(x)}
+   \\\\ P(y|x)=\frac{\prod_{i=1}^{n+1}M_i(y_{i-1},y_i|x)}{Z_w(x)}
+   \\\\ P(y_i|x)=\frac{\alpha_i[y_i]\beta_i[y_i]}{Z_w(x)}
+   \\\\ P(y_{i-1},y_i|x)=\frac{\alpha_{i-1}[y_{i-1}]M_i(y_{i-1},y_i|x)\beta_i[y_i]}{Z_w(x)}
    $$
    若使用如**scipy.optimize**提供的自动最优化函数，则只需要在代码中显示写出$P(y|x)$的表达式即可，若需手写训练代码，则需继续往下推导求导公式。
    
@@ -81,9 +81,9 @@
    对w求导：
    $$
    \frac{\partial{L(w)}}{\partial{w}}=\frac{1}{Z_w(x)}\sum_ye^{w^TF(x,y)}F(x,y)-F(x,y)
-   \\ =\sum_yP(y|x)F(x,y)-F(x,y)
-   \\ =\sum_{i=1}^{n+1}\sum_{y_{i-1},y_i}P(y_{i-1},y_i|x)F(y_{i-1},y_i,x,i)-F(x,y)
-   \\ =\sum_{i=1}^{n+1}\sum_{y_{i-1},y_i}\frac{\alpha_{i-1}[y_{i-1}]M_i(y_{i-1},y_i|x)\beta_i[y_i]}{Z_w(x)}F(y_{i-1},y_i,x,i)-F(x,y)
+   \\\\ =\sum_yP(y|x)F(x,y)-F(x,y)
+   \\\\ =\sum_{i=1}^{n+1}\sum_{y_{i-1},y_i}P(y_{i-1},y_i|x)F(y_{i-1},y_i,x,i)-F(x,y)
+   \\\\ =\sum_{i=1}^{n+1}\sum_{y_{i-1},y_i}\frac{\alpha_{i-1}[y_{i-1}]M_i(y_{i-1},y_i|x)\beta_i[y_i]}{Z_w(x)}F(y_{i-1},y_i,x,i)-F(x,y)
    $$
    可以使用一次前向遍历求出各个时刻的$\alpha_i,M_i(x),Z_w(x)$，再通过一次后向遍历求出$\beta_i$即可求出上式中的前半部分，可以使用矩阵运算对累加进行批量操作。
 
