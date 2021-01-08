@@ -2,9 +2,9 @@
 
 机器学习、深度学习、自然语言处理基础知识总结。
 
-目前主要参考李航老师的《统计学习方法》一书，也结合了知乎、CSDN等众多博客的内容，完成了大部分机器学习模型的笔记和代码。也有一些内容例如**XGBoost**、**LSTM+CRF**是书中未提及的。
+目前主要参考李航老师的《统计学习方法》一书，也结合了知乎、CSDN等众多博客的内容。也有一些内容例如**XGBoost**、**LSTM+CRF**是书中未提及的。
 
-由于github的markdown解析器不支持latex，因此数学公式需要下载到本地使用Typora等编辑器才能正常浏览。
+由于github的markdown解析器不支持latex，因此需要安装chrome插件[MathJax Plugin for Github](https://github.com/orsharir/github-mathjax)或者在本地使用Typora才能正常浏览。
 
 Document文件夹下为笔记，Code文件夹下为代码，Data文件夹下为某些代码所使用的数据集。
 
