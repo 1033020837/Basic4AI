@@ -78,7 +78,7 @@
 
    下图给出了EM算法的直观解释：
 
-   ![img](https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1575595915,178749768&fm=26&gp=0.jpg)
+   [![sK7b7T.jpg](https://s3.ax1x.com/2021/01/09/sK7b7T.jpg)](https://imgchr.com/i/sK7b7T)
 
    下方曲线为$B(\theta,\theta^{(i)})$，上方曲线为$L(\theta)$。
 

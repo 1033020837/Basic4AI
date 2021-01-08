@@ -4,15 +4,15 @@
 
    先来举个**例子**，我们要预测一家人对电子游戏的喜好程度，考虑到年轻和年老相比，年轻更可能喜欢电子游戏，以及男性和女性相比，男性更喜欢电子游戏，故先根据年龄大小区分小孩和大人，然后再通过性别区分开是男是女，逐一给各人在电子游戏喜好程度上打分，如下图所示。
 
-   ![img](https://img-blog.csdn.net/20180804174128743?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3ZfSlVMWV92/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+   [![sKHegA.png](https://s3.ax1x.com/2021/01/09/sKHegA.png)](https://imgchr.com/i/sKHegA)
 
    就这样，训练出了2棵树tree1和tree2，类似之前gbdt的原理，两棵树的结论累加起来便是最终的结论，所以小孩的预测分数就是两棵树中小孩所落到的结点的分数相加：2 + 0.9 = 2.9。爷爷的预测分数同理：-1 + （-0.9）= -1.9。具体如下图所示：
 
-   ![img](https://imgconvert.csdnimg.cn/aHR0cDovL3d3dy50ZW5zb3JmbG93bmV3cy5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMTgvMDcvNS0yLnBuZw?x-oss-process=image/format,png)
+   [![sKHmjI.png](https://s3.ax1x.com/2021/01/09/sKHmjI.png)](https://imgchr.com/i/sKHmjI)
 
 2. XGBoost目标函数
 
-   ![img](https://imgconvert.csdnimg.cn/aHR0cDovL2p1bHllZHUtaW1nLm9zcy1jbi1iZWlqaW5nLmFsaXl1bmNzLmNvbS9xdWVzYmFzZTY0MTUzMTQ4Mjc4MjYxNzIzNjMucG5n?x-oss-process=image/format,png)
+   [![sKHMHf.png](https://s3.ax1x.com/2021/01/09/sKHMHf.png)](https://imgchr.com/i/sKHMHf)
 
    其中：
 
@@ -73,13 +73,13 @@
 
      贪心算法获得一个叶节点分割特征的流程：
 
-     ![img](https://img-blog.csdn.net/20170228144201588)
+     [![sKHlE8.png](https://s3.ax1x.com/2021/01/09/sKHlE8.png)](https://imgchr.com/i/sKHlE8)
 
    - 近似算法
 
      对于连续型特征，使用分位点代替连续步长查找以节省时间。
 
-     ![img](https://img-blog.csdn.net/20170228144525979)
+     [![sKH34g.png](https://s3.ax1x.com/2021/01/09/sKH34g.png)](https://imgchr.com/i/sKH34g)
 
    
 

@@ -6,7 +6,7 @@
 
    设输入序列x长度为n，即$x=(x_1,x_2,...,x_n)$，可能的标签个数为m，即存在$m^n$种可能的输出序列$y=(y_1,y_2,...,y_n)$。
 
-   设LSTM输出的各个时刻各标签的概率为$E\in\R^{n*m}$，转移矩阵为$T\in\R{m*m}$，任意序列y的得分为score(y)，则：
+   设LSTM输出的各个时刻各标签的概率为$E\in\mathbb{R}^{n*m}$，转移矩阵为$T\in\mathbb{R}{m*m}$，任意序列y的得分为score(y)，则：
    $$
    score(y)=\sum_{i=1}^n({E[i,y_i]+T[y_{i-1},y_i]})
    $$
@@ -33,7 +33,7 @@
    \\=E(i+1,t_j)+\ln{\sum_{k=1}^me^{T(t_k,t_j)}*e^{\ln\alpha(y_i=t_k)}}
    \\=E(i+1,t_j)+\ln{\sum_{k=1}^me^{T(t_k,t_j)+\ln\alpha(y_i=t_k)}}
    $$
-   令$\beta_i=[\ln\alpha(y_i=t_1),\ln\alpha(y_i=t_2),...,\ln\alpha(y_i=t_m)]\in\R^m$，则：
+   令$\beta_i=[\ln\alpha(y_i=t_1),\ln\alpha(y_i=t_2),...,\ln\alpha(y_i=t_m)]\in\mathbb{R}^m$，则：
    $$
    \beta_{i+1}=[\ln\sum_{k=1}^me^{\beta_{i,k}+T(t_k,t_0)}+E(i+1,t_0),\ln\sum_{k=1}^me^{\beta_{i,k}+T(t_k,t_1)}+E(i+1,t_1),
    \\...,\ln\sum_{k=1}^me^{\beta_{i,k}+T(t_k,t_m)}+E(i+1,t_m)]
@@ -46,12 +46,12 @@
 
    推理时如果直接计算每条路径的得分然后取得分最大的路径则时间复杂度为$m^n$，再次考虑使用动态规划来求解。
 
-   记$\delta_i\in\R^m$，其第j维$\delta_{i,j}$表示i时刻以标签$t_j$结尾的所有路径的得分中的最大得分，则：
+   记$\delta_i\in\mathbb{R}^m$，其第j维$\delta_{i,j}$表示i时刻以标签$t_j$结尾的所有路径的得分中的最大得分，则：
    $$
    \delta_{i+1,j}=\max_{k}[\delta_{i,k}+T(t_k,t_j)+E(i+1,t_j)]
    \\=\max_{k}[\delta_{i,k}+T(t_k,t_j)]
    $$
-   同时使用$Q\in\R^{n*m}$来方便进行路径回溯，矩阵第i行第j列对应元素$Q_{i,j}$表示第i个时刻以标签$t_j$结尾时得分最大路径的第i-1时刻所对应的标签，即：
+   同时使用$Q\in\mathbb{R}^{n*m}$来方便进行路径回溯，矩阵第i行第j列对应元素$Q_{i,j}$表示第i个时刻以标签$t_j$结尾时得分最大路径的第i-1时刻所对应的标签，即：
    $$
    Q_{i+1,j}=\arg\max_{k}[\delta_{i,k}+T(t_k,t_j)]
    $$
@@ -61,7 +61,4 @@
    - 使用数值稳定版本的$\ln\sum\exp$函数。
    - 对于使用batch实现的批操作，注意针对长度不同的序列要使用mask，计算$P(y|x)$以及推理时均需要。
 
-5. Pytorch版本的实现：
-
-   https://github.com/1033020837/CRF4Torch
 

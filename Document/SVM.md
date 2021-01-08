@@ -1,14 +1,14 @@
 1. 导出SVM要优化的问题
 
-   ![img](https://img-blog.csdn.net/20140829134124453)
+   [![sKTRzR.jpg](https://s3.ax1x.com/2021/01/08/sKTRzR.jpg)](https://imgchr.com/i/sKTRzR)
 
    对于上图中这样一个二分类线性可分问题，期望找到一个分类超平面将正负类分开，SVM就是一个用来寻找这样的分类超平面的算法。
 
    定义正负类的标签分别为1、-1，分类超平面的表达式为$f(x)=w^Tx+b$，其中x为样本向量，w、b分别为超平面的权重以及偏置项。可以由$f(x)$的符号来区分样本的类别，当样本类别为1时$f(x)>0$，当样本类别为-1时$f(x)<0$，则$yf(x)>0$始终成立。
 
-   对于任意一个样本点x，令其垂直投影到超平面上的对应点为 x<sub>0</sub> ，w 是垂直于超平面的一个向量(法向量)，![img](https://img-blog.csdn.net/20140829135315499)为样本x到超平面的距离（带符号），如下图所示：
+   对于任意一个样本点x，令其垂直投影到超平面上的对应点为 x<sub>0</sub> ，w 是垂直于超平面的一个向量(法向量)，$\gamma$为样本x到超平面的距离（带符号），如下图所示：
 
-   ![img](http://blog.pluskid.org/wp-content/uploads/2010/09/geometric_margin.png)
+   [![sKTodO.png](https://s3.ax1x.com/2021/01/08/sKTodO.png)](https://imgchr.com/i/sKTodO)
 
    则x可表示为：
    $$
@@ -198,7 +198,7 @@
 
    - 核函数
 
-     设$\chi$是输入空间（欧氏空间$\R^n$的子集或离散集合），又设$\mathcal H$为特征空间（希尔伯特空间（咱也不知道是啥，大概就是欧式空间的拓展吧）），如果存在一个从$\chi$到$\mathcal H$的映射
+     设$\chi$是输入空间（欧氏空间$\mathbb{R}^n$的子集或离散集合），又设$\mathcal H$为特征空间（希尔伯特空间（咱也不知道是啥，大概就是欧式空间的拓展吧）），如果存在一个从$\chi$到$\mathcal H$的映射
      $$
      \phi(x):\chi\rightarrow \mathcal H
      $$
@@ -226,7 +226,7 @@
 
    通常所说的核函数就是正定核，正定核存在以下充要条件：
 
-   设$K:\chi * \chi \rightarrow \R$是对称函数，则$K(x,z)$为正定核函数的充要条件是对任意$x_i\in \chi,i=1,2,...,m$，$K(x,z)$对应的Gram矩阵：
+   设$K:\chi * \chi \rightarrow \mathbb{R}$是对称函数，则$K(x,z)$为正定核函数的充要条件是对任意$x_i\in \chi,i=1,2,...,m$，$K(x,z)$对应的Gram矩阵：
    $$
    K=[K(x_i,x_j)]_{m*m}
    $$

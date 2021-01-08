@@ -6,7 +6,7 @@
 
    线性链条件随机场如下图所示，输出变量仅与输入变量以及相邻输出变量有连线。
 
-   ![img](../Image/CRF_1.png)
+   [![sKHSj1.png](https://s3.ax1x.com/2021/01/09/sKHSj1.png)](https://imgchr.com/i/sKHSj1)
 
 2. CRF的参数化表示
 
