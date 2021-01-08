@@ -227,34 +227,6 @@ class DecisionTree(object):
                 else:
                     return self.predict(tree['childs']['right'],data)
 
-    def prune(self, tree, datas, targets, alpha=1):
-        '''
-        后剪枝
-        '''
-
-        if self.type in ['ID3','C4.5']:
-            c_ta = self._cal_entropy(targets) * targets.shape[0] + alpha    # 该节点缩为叶节点后的损失函数
-
-
-            if tree['is_leaf']:
-                return c_ta
-            else:
-                c_tb = 0 # 该节点缩为叶节点前的损失函数
-                for value,sub_tree in tree['childs'].items():
-                    indicies = datas[:,tree['best_feat']] == value
-                    sub_datas = np.hstack((datas[indicies,:tree['best_feat']],datas[indicies,tree['best_feat']+1:]))
-                    c_tb += self.prune(sub_tree, sub_datas, targets[indicies], alpha=alpha)
-
-
-                if c_ta <= c_tb:    # 将该节点设为叶节点后损失函数变小
-                    tree['is_leaf'] = True
-                    tree['label'] = self._majority_vote(targets)
-                    return c_ta
-                else:
-                    return c_tb
-        else:
-            pass
-
 
     def _cal_entropy(self, targets):
         '''
@@ -348,14 +320,7 @@ if __name__ == '__main__':
 
     decision_tree.tree = decision_tree.build_tree(train_datas, train_targets, attr_type, 0)
 
-    print('Before prune:')
     decision_tree.test(test_datas, test_targets)
-
-    # # 剪枝
-    # decision_tree.prune(decision_tree.tree, train_datas, train_targets, alpha=10)
-
-    # print('After prune:')
-    # decision_tree.test(test_datas, test_targets)
 
 
 
