@@ -39,8 +39,8 @@
    在输出序列最前面添加一个开始标签start，最后添加一个结束标签end，输出序列变为：
    $$
    y=(y_0,y_1,...,y_n,y_{n+1})
-   \\y_0=start
-   \\y_{n+1}=end
+   \\ y_0=start
+   \\ y_{n+1}=end
    $$
    定义n+1个m阶矩阵$M_1(x),M_2(x),...,M_{n+1}(x)$，第i个矩阵$M_i$第$y_{i-1}$行$y_i$列代表i-1时刻标签为a，第i时刻标签为b的得分取指数，即：
    $$
@@ -49,10 +49,9 @@
    设m为添加了开始、结束标签后标签的个数，m维向量$\alpha_i$的任意一维表示i时刻取该维度对应标签的所有路径到位置i的前半部分的得分取指数的和，则：
    $$
    \alpha_0=\left\{\begin{aligned}
-   1 \qquad if\quad t_j=start\\
+   1 \qquad if\quad t_j=start \\
    0 \qquad\qquad otherwise
    \end{aligned}\right.
-   
    \\ \alpha_i=(\alpha_{i-1}^TM_i(x))^T \quad i=1,2,...,n+1
    $$
    设m维向量$\beta_i$的任意一维表示i时刻取该维度对应标签的所有路径从位置i+1开始的后半部分的得分取指数的和，则：
@@ -72,7 +71,7 @@
    \\P(y_{i-1},y_i|x)=\frac{\alpha_{i-1}[y_{i-1}]M_i(y_{i-1},y_i|x)\beta_i[y_i]}{Z_w(x)}
    $$
    若使用如**scipy.optimize**提供的自动最优化函数，则只需要在代码中显示写出$P(y|x)$的表达式即可，若需手写训练代码，则需继续往下推导求导公式。
-
+   
 4. 损失函数求导
 
    以负对数似然函数为损失函数，即：
@@ -82,9 +81,9 @@
    对w求导：
    $$
    \frac{\partial{L(w)}}{\partial{w}}=\frac{1}{Z_w(x)}\sum_ye^{w^TF(x,y)}F(x,y)-F(x,y)
-   \\=\sum_yP(y|x)F(x,y)-F(x,y)
-   \\=\sum_{i=1}^{n+1}\sum_{y_{i-1},y_i}P(y_{i-1},y_i|x)F(y_{i-1},y_i,x,i)-F(x,y)
-   \\=\sum_{i=1}^{n+1}\sum_{y_{i-1},y_i}\frac{\alpha_{i-1}[y_{i-1}]M_i(y_{i-1},y_i|x)\beta_i[y_i]}{Z_w(x)}F(y_{i-1},y_i,x,i)-F(x,y)
+   \\ =\sum_yP(y|x)F(x,y)-F(x,y)
+   \\ =\sum_{i=1}^{n+1}\sum_{y_{i-1},y_i}P(y_{i-1},y_i|x)F(y_{i-1},y_i,x,i)-F(x,y)
+   \\ =\sum_{i=1}^{n+1}\sum_{y_{i-1},y_i}\frac{\alpha_{i-1}[y_{i-1}]M_i(y_{i-1},y_i|x)\beta_i[y_i]}{Z_w(x)}F(y_{i-1},y_i,x,i)-F(x,y)
    $$
    可以使用一次前向遍历求出各个时刻的$\alpha_i,M_i(x),Z_w(x)$，再通过一次后向遍历求出$\beta_i$即可求出上式中的前半部分，可以使用矩阵运算对累加进行批量操作。
 
