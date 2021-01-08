@@ -4,7 +4,7 @@
 
    AdaBoost算法具体流程：
 
-   - 输入：训练数据集$T={(x_1,y_1),(x_2,y_2),..,(x_N,y_N)}$，其中$x_i\in \mathbb{R}^n$，$Y_i\in\{{-1,1\}}$；弱分类器算法（一般为树桩）；
+   - 输入：训练数据集$T={(x_1,y_1),(x_2,y_2),..,(x_N,y_N)}$，其中$x_i\in \mathbb{R}^n$，$Y_i\in \{-1,1\}$；弱分类器算法（一般为树桩）；
    
    - 输出：最终分类器$G(x)$.
    
@@ -94,7 +94,7 @@
      然后对$\alpha_m$求导并使其等于0，得：
      $$
      \alpha_m^*=\frac{1}{2}\ln \frac{1-e_m}{e_m}
-     \\e_m=\frac{\sum_{i=1}^N\overline w_{mi}I(y_i\ne G_m(x_i))}{\sum_{i=1}^N\overline w_{mi}}
+     \\ e_m=\frac{\sum_{i=1}^N\overline w_{mi}I(y_i\ne G_m(x_i))}{\sum_{i=1}^N\overline w_{mi}}
      $$
      
      令$w_{mi}=\frac{\overline w_{mi}}{\sum_{i=1}^N\overline w_{mi}}$，得$e_m=\sum_{i=1}^Nw_{mi}I(y_i\ne G_m(x_i))$，这与AdaBoost一致。特别地，当$m=0$时，$\overline w_{mi}=e^{-y_i*0}=1,w_{mi}=\frac{1}{N}=\frac{\overline w_{mi}}{\sum_{i=1}^N\overline w_{mi}}$。
@@ -106,8 +106,8 @@
      由$w_{m+1,i}=\frac{\overline w_{m+1,i}}{\sum_{i=1}^N\overline w_{m+1,i}}$以及上式得：
      $$
      w_{m+1,i}=\frac{\overline w_{mi}e^{-y_i\alpha_mG_m(x_i)}}{\sum_{i=1}^N\overline w_{mi}e^{-y_i\alpha_mG_m(x_i)}}
-     \\=\frac{\frac{\overline w_{mi}}{\sum_{i=1}^N\overline w_{mi}}e^{-y_i\alpha_mG_m(x_i)}}{\sum_{i=1}^N\frac{\overline w_{mi}}{\sum_{i=1}^N\overline w_{mi}}e^{-y_i\alpha_mG_m(x_i)}}
-     \\=\frac{w_{mi}e^{-y_i\alpha_mG_m(x_i)}}{\sum_{i=1}^Nw_{mi}e^{-y_i\alpha_mG_m(x_i)}}
+     \\ =\frac{\frac{\overline w_{mi}}{\sum_{i=1}^N\overline w_{mi}}e^{-y_i\alpha_mG_m(x_i)}}{\sum_{i=1}^N\frac{\overline w_{mi}}{\sum_{i=1}^N\overline w_{mi}}e^{-y_i\alpha_mG_m(x_i)}}
+     \\ =\frac{w_{mi}e^{-y_i\alpha_mG_m(x_i)}}{\sum_{i=1}^Nw_{mi}e^{-y_i\alpha_mG_m(x_i)}}
      $$
      与AdaBoost一致。
      
