@@ -80,10 +80,10 @@
      令$\overline w_{mi}=e^{-y_if_{m-1}(x_i)}$，则上式子可以化为：
      $$
      (\alpha_m,G_m)=\arg\min_{\alpha_m,G_m(x)}\sum_{i=1}^N\overline w_{mi}e^{-\alpha_my_iG_m(x_i)}
-     \\=\arg\min_{\alpha_m,G_m}e^{-\alpha_m}\sum_{y_i=G_m(x_i)}\overline w_{mi}+e^{\alpha_m}\sum_{y_i\ne G_m(x_i)}\overline w_{mi}
-     \\=\arg\min_{\alpha_m,G_m}e^{-\alpha_m}(\sum_{i=1}^N\overline w_{mi}-\sum_{y_i\ne G_m(x_i)}\overline w_{mi})+e^{\alpha_m}\sum_{y_i\ne G_m(x_i)}\overline w_{mi}
-     \\=\arg\min_{\alpha_m,G_m}e^{-\alpha_m}\sum_{i=1}^N\overline w_{mi}+(e^{\alpha_m}-e^{-\alpha_m})\sum_{y_i\ne G_m(x_i)}\overline w_{mi}
-     \\=\arg\min_{\alpha_m,G_m}e^{-\alpha_m}\sum_{i=1}^N\overline w_{mi}+(e^{\alpha_m}-e^{-\alpha_m})\sum_{i=1}^N\overline w_{mi}I(y_i\ne G_m(x_i))
+     \\ =\arg\min_{\alpha_m,G_m}e^{-\alpha_m}\sum_{y_i=G_m(x_i)}\overline w_{mi}+e^{\alpha_m}\sum_{y_i\ne G_m(x_i)}\overline w_{mi}
+     \\ =\arg\min_{\alpha_m,G_m}e^{-\alpha_m}(\sum_{i=1}^N\overline w_{mi}-\sum_{y_i\ne G_m(x_i)}\overline w_{mi})+e^{\alpha_m}\sum_{y_i\ne G_m(x_i)}\overline w_{mi}
+     \\ =\arg\min_{\alpha_m,G_m}e^{-\alpha_m}\sum_{i=1}^N\overline w_{mi}+(e^{\alpha_m}-e^{-\alpha_m})\sum_{y_i\ne G_m(x_i)}\overline w_{mi}
+     \\ =\arg\min_{\alpha_m,G_m}e^{-\alpha_m}\sum_{i=1}^N\overline w_{mi}+(e^{\alpha_m}-e^{-\alpha_m})\sum_{i=1}^N\overline w_{mi}I(y_i\ne G_m(x_i))
      $$
      对于固定的$\alpha_m$，上式中$e^{-\alpha_m}\sum_{i=1}^N\overline w_{mi}$和$e^{\alpha_m}-e^{-\alpha_m}$都是定值，则上式等价于：
      $$
