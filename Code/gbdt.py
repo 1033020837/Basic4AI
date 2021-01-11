@@ -136,6 +136,7 @@ class GBDT(object):
         '''
         one-hot编码
         '''
+        
         one_hot_target= np.zeros((sparse_target.shape[0],self.class_count))  
         one_hot_target[np.arange(sparse_target.shape[0]), sparse_target] = 1
         return one_hot_target
@@ -143,7 +144,7 @@ class GBDT(object):
 if __name__ == '__main__':
 
     binary_classification = False   # 是否进行二分类
-    predict_type = 'regression' # 分类还是回归任务  classification 分类 regression 回归
+    predict_type = 'classification' # 分类还是回归任务  classification 分类 regression 回归
 
     if predict_type == 'classification':
         # 加载sklearn自带的手写数字识别数据集
@@ -170,7 +171,7 @@ if __name__ == '__main__':
 
     attr_type = [1] * train_datas.shape[1]
 
-    tree_count = 100
+    tree_count = 10
     learning_rate = 0.1
     max_depth = 3
     gbdt = GBDT(learning_rate = learning_rate, tree_count = tree_count,\
