@@ -2,7 +2,7 @@
 
 机器学习、深度学习、自然语言处理基础知识总结。
 
-目前主要参考李航老师的《统计学习方法》一书，也有一些内容例如**XGBoost**、**LSTM+CRF**是书中未提及的。
+目前主要参考李航老师的《统计学习方法》一书，也有一些内容例如**XGBoost**、**LSTM+CRF**、**深度学习相关内容**等是书中未提及的。
 
 由于github的markdown解析器不支持latex，因此笔记部分需要在本地使用Typora才能正常浏览，也可以直接访问下面给出的博客链接。
 
@@ -25,6 +25,10 @@ Document文件夹下为笔记，Code文件夹下为代码，Data文件夹下为�
 - 随机森林（[笔记](https://www.cnblogs.com/lyq2021/p/14253876.html)+[代码](Code/random_forest.py)）
 - XGBoost（[笔记](https://www.cnblogs.com/lyq2021/p/14253885.html)）
 
+# 深度学习
+
+- 神经网络（[笔记](https://www.cnblogs.com/lyq2021/p/14269424.html)+[代码](Code/neural_network.py)）
+
 # 自然语言处理
 
 - LSTM+CRF（[笔记](https://www.cnblogs.com/lyq2021/p/14253897.html)）
@@ -33,9 +37,10 @@ Document文件夹下为笔记，Code文件夹下为代码，Data文件夹下为�
 # 待添加部分
 
 - 机器学习基础理论
-- 神经网络
 - 聚类
 - 降维算法
-- 自然语言处理相关技术（词嵌入、预训练模型等）
 - 最优化方法
+- RNN、CNN等深度学习基础知识
+- 自然语言处理相关技术（词嵌入、预训练模型等）
+- 等等
 
