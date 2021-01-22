@@ -35,6 +35,7 @@ Document文件夹下为笔记，Code文件夹下为代码，Data文件夹下为�
 
 - 词嵌入之Word2Vec([笔记](https://www.cnblogs.com/lyq2021/p/14308673.html))
 - 词嵌入之GloVe([笔记](https://www.cnblogs.com/lyq2021/p/14312830.html))
+- 词嵌入之FastText([笔记](https://www.cnblogs.com/lyq2021/p/14313968.html))
 - LSTM+CRF（[笔记](https://www.cnblogs.com/lyq2021/p/14253897.html)）
 
 
