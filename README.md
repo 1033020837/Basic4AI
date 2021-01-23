@@ -36,6 +36,7 @@ Document文件夹下为笔记，Code文件夹下为代码，Data文件夹下为�
 - 词嵌入之Word2Vec([笔记](https://www.cnblogs.com/lyq2021/p/14308673.html))
 - 词嵌入之GloVe([笔记](https://www.cnblogs.com/lyq2021/p/14312830.html))
 - 词嵌入之FastText([笔记](https://www.cnblogs.com/lyq2021/p/14313968.html))
+- TextCNN（[笔记](https://www.cnblogs.com/lyq2021/p/14317291.html)+[代码](Code/textcnn.py)）
 - LSTM+CRF（[笔记](https://www.cnblogs.com/lyq2021/p/14253897.html)）
 
 
@@ -44,8 +45,13 @@ Document文件夹下为笔记，Code文件夹下为代码，Data文件夹下为�
 - 机器学习基础理论
 - 聚类
 - 降维算法
+- 特征选择方法
 - 最优化方法
-- RNN、CNN等深度学习基础知识
-- 自然语言处理相关技术（词嵌入、预训练模型等）
+- CNN
+- Seq2Seq
+- Attention
+- 主题模型
+- Transformer
+- Bert类模型
 - 等等
 
