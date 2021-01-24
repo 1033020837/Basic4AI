@@ -30,6 +30,7 @@ Document文件夹下为笔记，Code文件夹下为代码，Data文件夹下为�
 - 神经网络（[笔记](https://www.cnblogs.com/lyq2021/p/14269424.html)+[代码](Code/neural_network.py)）
 - RNN([笔记](https://www.cnblogs.com/lyq2021/p/14295398.html))
 - LSTM和GRU([笔记](https://www.cnblogs.com/lyq2021/p/14302282.html))
+- CNN([笔记](https://www.cnblogs.com/lyq2021/p/14321103.html))
 
 # 自然语言处理
 
@@ -47,7 +48,6 @@ Document文件夹下为笔记，Code文件夹下为代码，Data文件夹下为�
 - 降维算法
 - 特征选择方法
 - 最优化方法
-- CNN
 - Seq2Seq
 - Attention
 - 主题模型
