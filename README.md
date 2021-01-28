@@ -26,6 +26,7 @@ Document文件夹下为笔记，Code文件夹下为代码，Data文件夹下为�
 - 条件随机场（[笔记](https://www.cnblogs.com/lyq2021/p/14253872.html)）
 - 随机森林（[笔记](https://www.cnblogs.com/lyq2021/p/14253876.html)+[代码](Code/random_forest.py)）
 - XGBoost（[笔记](https://www.cnblogs.com/lyq2021/p/14253885.html)）
+- 聚类（[笔记](https://www.cnblogs.com/lyq2021/p/14341111.html)）
 
 # 深度学习
 
@@ -48,11 +49,11 @@ Document文件夹下为笔记，Code文件夹下为代码，Data文件夹下为�
 
 # 待添加部分
 
-- 机器学习基础理论
-- 聚类
+- 线性回归
 - 降维算法
 - 特征选择方法
 - 主题模型
 - Bert类模型
-- 等等
+- LightGBM
+- 其他基础知识点
 

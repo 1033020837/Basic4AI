@@ -233,7 +233,7 @@
 
    - 可以设想观测数据$y_j$是这样产生的：首先依概率$\alpha_k$选择第k个高斯分布，然后依第k个分模型的参数生成观测数据。以隐变量$\gamma_{jk}=1$表示第j个观测来自第j个模型，否则为0。于是EM算法的观测数据为$Y=(y_1,y_2,...,y_n)$，未观测数据为$\gamma=(\gamma_{j1},\gamma_{j2},...,\gamma_{jK}),j=1,2,...,n$。
 
-     完全数据的对数似然函数为：
+     完全数据的似然函数为：
      $$
      P(Y,\gamma|\theta)=\prod_{j=1}^n\prod_{k=1}^K(\alpha_k\phi(y|\theta_k))^{\gamma_{jk}}
      \\=\prod_{j=1}^n\prod_{k=1}^K(\alpha_k\frac{1}{\sqrt {2\pi}\sigma_k}e^{-\frac{(y-\mu_k)^2}{2\sigma_k^2}})^{\gamma_{jk}}
