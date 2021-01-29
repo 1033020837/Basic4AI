@@ -44,6 +44,7 @@ Document文件夹下为笔记，Code文件夹下为代码，Data文件夹下为�
 - TextCNN（[笔记](https://www.cnblogs.com/lyq2021/p/14317291.html)+[代码](Code/textcnn.py)）
 - Seq2Seq（[笔记](https://www.cnblogs.com/lyq2021/p/14325262.html)+[代码](https://github.com/1033020837/pytorch-seq2seq/blob/master/4%20-%20Packed%20Padded%20Sequences%2C%20Masking%2C%20Inference%20and%20BLEU.ipynb)）
 - Transformer（[笔记](https://www.cnblogs.com/lyq2021/p/14330534.html)+[代码](https://github.com/1033020837/pytorch-seq2seq/blob/master/6%20-%20Attention%20is%20All%20You%20Need.ipynb)）
+- BERT（[笔记](https://www.cnblogs.com/lyq2021/p/14347124.html)）
 - LSTM+CRF进行序列标注（[笔记](https://www.cnblogs.com/lyq2021/p/14253897.html)）
 
 
@@ -53,7 +54,6 @@ Document文件夹下为笔记，Code文件夹下为代码，Data文件夹下为�
 - 降维算法
 - 特征选择方法
 - 主题模型
-- Bert类模型
 - LightGBM
 - 其他基础知识点
 
