@@ -12,6 +12,7 @@ Document文件夹下为笔记，Code文件夹下为代码，Data文件夹下为�
 
 # 机器学习
 
+- 线性回归（[笔记](https://www.cnblogs.com/lyq2021/p/14353781.html)）
 - 感知机（[笔记](https://www.cnblogs.com/lyq2021/p/14253768.html)+[代码](Code/perceptron.py)）
 - KNN（[笔记](https://www.cnblogs.com/lyq2021/p/14253756.html)+[代码](Code/knn.py)）
 - 朴素贝叶斯（[笔记](https://www.cnblogs.com/lyq2021/p/14253771.html)+[代码](Code/naive_bayes.py)）
@@ -50,10 +51,8 @@ Document文件夹下为笔记，Code文件夹下为代码，Data文件夹下为�
 
 # 待添加部分
 
-- 线性回归
 - 降维算法
 - 特征选择方法
 - 主题模型
 - LightGBM
-- 其他基础知识点
 
