@@ -29,6 +29,7 @@ Document文件夹下为笔记，Code文件夹下为代码，Data文件夹下为�
 - XGBoost（[笔记](https://www.cnblogs.com/lyq2021/p/14253885.html)）
 - 聚类（[笔记](https://www.cnblogs.com/lyq2021/p/14341111.html)）
 - 特征工程之降维算法（[笔记](https://www.cnblogs.com/lyq2021/p/14364452.html)）
+- 特征工程之特征选择（[笔记](https://www.cnblogs.com/lyq2021/p/14367515.html)）
 
 # 深度学习
 
@@ -52,7 +53,6 @@ Document文件夹下为笔记，Code文件夹下为代码，Data文件夹下为�
 
 # 待添加部分
 
-- 特征选择方法
 - 主题模型
 - LightGBM
 
