@@ -8,7 +8,7 @@
 
 Document文件夹下为笔记，Code文件夹下为代码，Data文件夹下为某些代码所使用的数据集，Image文件夹下为笔记部分所用到的图片。
 
-由于时间和精力有限，部分代码来自github开源项目，如Seq2Seq、Transformer等部分的代码。
+由于时间和精力有限，部分代码来自github开源项目，如Seq2Seq、Transformer等部分的代码，部分章节代码待补充。
 
 # 机器学习
 
@@ -28,8 +28,8 @@ Document文件夹下为笔记，Code文件夹下为代码，Data文件夹下为�
 - 随机森林（[笔记](https://www.cnblogs.com/lyq2021/p/14253876.html)+[代码](Code/random_forest.py)）
 - XGBoost（[笔记](https://www.cnblogs.com/lyq2021/p/14253885.html)）
 - 聚类（[笔记](https://www.cnblogs.com/lyq2021/p/14341111.html)）
-- 特征工程之降维算法（[笔记](https://www.cnblogs.com/lyq2021/p/14364452.html)）
 - 特征工程之特征选择（[笔记](https://www.cnblogs.com/lyq2021/p/14367515.html)）
+- 特征工程之降维算法（[笔记](https://www.cnblogs.com/lyq2021/p/14364452.html)）
 
 # 深度学习
 
@@ -49,10 +49,5 @@ Document文件夹下为笔记，Code文件夹下为代码，Data文件夹下为�
 - Transformer（[笔记](https://www.cnblogs.com/lyq2021/p/14330534.html)+[代码](https://github.com/1033020837/pytorch-seq2seq/blob/master/6%20-%20Attention%20is%20All%20You%20Need.ipynb)）
 - BERT（[笔记](https://www.cnblogs.com/lyq2021/p/14347124.html)）
 - LSTM+CRF进行序列标注（[笔记](https://www.cnblogs.com/lyq2021/p/14253897.html)）
-
-
-# 待添加部分
-
-- 主题模型
-- LightGBM
+- 主题模型（[笔记](https://www.cnblogs.com/lyq2021/p/14394558.html)）
 
