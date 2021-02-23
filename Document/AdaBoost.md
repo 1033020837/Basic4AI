@@ -48,7 +48,7 @@
      $$
      f(x)=\sum_{m=1}^M\beta_mb(x;\gamma_m)
      $$
-     其中，$b(x;\gamma_m)$为基函数，$\gamma_m$为基函数参数，$beta_m$为基函数的系数，M为基函数的个数。
+     其中，$b(x;\gamma_m)$为基函数，$\gamma_m$为基函数参数，$\beta_m$为基函数的系数，M为基函数的个数。
 
      学习加法模型$f(x)$即对经验风险极小化：
      $$
@@ -99,7 +99,7 @@
      
      令$w_{mi}=\frac{\overline w_{mi}}{\sum_{i=1}^N\overline w_{mi}}$，得$e_m=\sum_{i=1}^Nw_{mi}I(y_i\ne G_m(x_i))$，这与AdaBoost一致。特别地，当$m=0$时，$\overline w_{mi}=e^{-y_i*0}=1,w_{mi}=\frac{1}{N}=\frac{\overline w_{mi}}{\sum_{i=1}^N\overline w_{mi}}$。
      
-     由$\overline w_{mi}=e^{-y_if_{m-1}(x_i)}$以及$f_m(x_i)==f_{m-1}(x)+\alpha_mG_m(x_i)$得：
+     由$\overline w_{mi}=e^{-y_if_{m-1}(x_i)}$以及$f_m(x_i)=f_{m-1}(x)+\alpha_mG_m(x_i)$得：
      $$
      \overline w_{m+1,i}=\overline w_{mi}e^{-y_i\alpha_mG_m(x_i)}
      $$
